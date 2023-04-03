@@ -6,6 +6,8 @@ import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
 from sklearn.model_selection import train_test_split
+import torch
+from Model import Model
 
 from Preprocess import Preprocess, PreprocessName
 
@@ -20,4 +22,4 @@ porter_df = preprocess.get_tokenlized_df(PreprocessName.PORTER_STEMMER)
 snowball_df = preprocess.get_tokenlized_df(PreprocessName.SNOWBALL_STEMMER)
 
 # Split datam into train and test
-print(snowball_df.head())
+lancaster_model = Model(lancaster_df, preprocess.data['CLASS'])

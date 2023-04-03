@@ -1,21 +1,34 @@
 from pandas import DataFrame
 from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+import torch
 
 
-class model:
-    def __init__(self, data: DataFrame):
-        self.data = data
+class Model:
+    TEST_SIZE = 0.3
+    RANDOM_SEED = 0
+
+    def __init__(self, token_data: DataFrame, class_data: DataFrame):
+        self.token_data = token_data
+        self.class_data = class_data
         self.x_test = None
         self.x_train = None
         self.y_test = None
         self.y_train = None
 
-    def get_data_input(self):
-        return self.data.iloc[:, :-1]
+        # Check here for GPU support https://towardsdatascience.com/installing-pytorch-on-apple-m1-chip-with-gpu-acceleration-3351dc44d67c
+        if torch.cuda.is_available():
+            self.device = torch.device("cuda")
+            print(f'There are {torch.cuda.device_count()} GPU(s) available.')
+            print('Device name:', torch.cuda.get_device_name(0))
 
-    def get_data_output(self):
-        return self.data.iloc[:, -1:]
+        else:
+            print('No GPU available, using the CPU instead.')
+            self.device = torch.device("cpu")
 
-    def train_test_split(self, test_size: float = 0.3, random_seed: int = 0):
+    def train_test_split(self, test_size: float = TEST_SIZE, random_seed: int = RANDOM_SEED):
         self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(
-            get_data_input(), get_data_output(), test_size=test_size, random_state=random_seed)
+            self.token_data, self.class_data, test_size=test_size, random_state=random_seed)
+        
+    def CNN_NLP():
+        
