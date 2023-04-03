@@ -41,16 +41,16 @@ class Preprocess:
         print(result.head())
         return result
 
-    def word_Lemmatizer(texts):
+    def word_Lemmatizer(self, texts):
         return ''.join([nltk.WordNetLemmatizer().lemmatize(word=x)for x in texts])
 
-    def word_PorterStemmer(texts):
+    def word_PorterStemmer(self, texts):
         return ''.join([nltk.PorterStemmer().stem(word=x)for x in texts])
 
-    def word_SnowballStemmer(texts):
+    def word_SnowballStemmer(self, texts):
         return ''.join([nltk.SnowballStemmer(language='english').stem(x)for x in texts])
 
-    def word_LancasterStemmer(texts):
+    def word_LancasterStemmer(self, texts):
         return ''.join([nltk.LancasterStemmer().stem(word=x)for x in texts])
 
     def dataframe_Lemmatizer(self):
