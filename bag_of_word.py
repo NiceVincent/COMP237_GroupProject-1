@@ -7,7 +7,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
 from sklearn.model_selection import train_test_split
 
-from GroupProject.Preprocess import PreprocessName
+from Preprocess import PreprocessName
+
 
 RANDOMS_SEED = 420
 TEST_SIZE = 0.4
