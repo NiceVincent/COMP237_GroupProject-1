@@ -15,7 +15,7 @@ class PreprocessName(Enum):
     LANCASTER_STEMMER = "lancaster"
 
 
-class preprocess:
+class Preprocess:
 
     def __init__(self):
         self.data = self.load_data()
@@ -35,8 +35,6 @@ class preprocess:
 
         # Show is any missing data
         print("============ Load File ============")
-        print("# Files loaded: ", os.listdir(directory).count())
-        print("Shape of dataframe: ", result.shape())
         print("Has na: data", result.isna().any())
         print("Has null data: ", result.isnull().any())
         print("Preview")
