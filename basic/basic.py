@@ -8,7 +8,7 @@ Created on Tue Apr  4 16:46:54 2023
 
 import pandas as pd
 import os
-path = "./"
+path = "../TrainData"
 filename = 'Youtube02-KatyPerry.csv'
 fullpath = os.path.join(path,filename)
 df = pd.read_csv(fullpath,sep=',',encoding='ISO-8859-1')
@@ -30,7 +30,7 @@ print('--------')
 
 # prepare the data using nltk and count_vectorizer
 from sklearn.feature_extraction.text import CountVectorizer
-import nltk
+# import nltk
 #nltk.download('stopwords')
 from nltk.corpus import stopwords
 
@@ -73,7 +73,8 @@ from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = \
     train_test_split(X_tfidf, Y, test_size=0.25, random_state=1)
-    
+
+print(f'X_test is \n {X_test}')    
 
 # fit the Naive Bayes classifier
 from sklearn.naive_bayes import MultinomialNB
@@ -105,17 +106,21 @@ plt.xlabel('Predict Values')
 plt.ylabel('Actual Values')
 
 # test the classifier with new comments
-new_comments = [
-    "Great movie, I enjoyed it!",
-    "The storyline was fantastic!",
-    "This movie was a waste of time.",
-    "I wouldn't recommend this movie.",
-    "Watch now for free at freemovies123!",
-    "Click here to win a free iPhone!",
-]
+# using Youtube03-LMFAO as test input
+test_path = "../TestData"
+test_filename = 'Youtube03-LMFAO.csv'
+test_fullpath = os.path.join(test_path,test_filename)
+test_df = pd.read_csv(test_fullpath,sep=',',encoding='ISO-8859-1')
+print('-------test prediction result-------')
 
-new_comments_transformed = count_vectorizer.transform(new_comments)
-new_comments_tfidf = tfidf.transform(new_comments_transformed)
-predictions = clf.predict(new_comments_tfidf)
+# Preprocess the new data frame
+X_new = count_vectorizer.transform(test_df['CONTENT'])
+X_new_tfidf = tfidf.transform(X_new)
+y_new = test_df['CLASS']
 
-print("Predicted classes:", predictions)
+# Predict the new data frame
+y_new_pred = clf.predict(X_new_tfidf)
+
+# Calculate accuracy and confusion matrix for the new data frame
+print("Confusion Matrix:\n", confusion_matrix(y_new, y_new_pred))
+print("Accuracy:", accuracy_score(y_new, y_new_pred))
